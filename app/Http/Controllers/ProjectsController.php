@@ -13,16 +13,12 @@ class ProjectsController
      */
 
      public function create(Request $request){
-        $user = Auth::user();
-
-        $today = now()->format('Y-m-d');
-
-        $validator = validate($request->all(), [
+        $validator = validator($request->all(), [
             'user_id' => 'required|exists:users,id',
             'lot_size' => 'required| numeric | max:1000',
             'floors' => 'required | numeric | max:50',
             'finish_type' => 'required | max:30',
-            'image' => 'sometimes | images | mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'image' => 'sometimes | mimes:jpeg,png,jpg,gif,svg|max:2048'
 
         ]);
 
@@ -48,10 +44,10 @@ class ProjectsController
       */
 
       public function index(){
-        return response()-json([
+        return response()->json([
             'ok' => true,
             'message' => 'Retrieved Successfully',
-            'date' => Projects::all()
+            'data' => Projects::all()
         ],200);
       }
 
@@ -66,7 +62,7 @@ class ProjectsController
             'lot_size' => 'required| numeric | max:1000',
             'floors' => 'required | numeric | max:50',
             'finish_type' => 'required | max:30',
-            'image' => 'sometimes | images | mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'image' => 'sometimes | mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
         if($validator->fails()){
@@ -98,4 +94,46 @@ class ProjectsController
             'date' => $project
         ], 200);
        }
+
+       /**
+        * Recent 10 Projects    
+        *
+        */
+
+        public function recents(){
+            return response()->json([
+                'ok' => true,
+                'message' => 'Recents Retrieved Successfully',
+                'data' => Projects::latest()->take(10)->get()
+            ], 200);
+        }
+
+        /**
+         * Dynamic Filter
+         */
+
+         public function filter(Request $request){
+
+            $query = Projects::query();
+
+            if ($request->filled('finish_type')){
+                $query->where('finish_type', $request->finish_type);
+            }
+
+            if ($request->filled('floors')){
+                $query->where('floors', $request->floors);
+            }
+
+            if ($request->filled('lot_size')){
+                $query->where('lot_size', $request->lot_size);
+            }
+
+            $projects = $query->latest()->get();
+
+            return response()->json([
+                'ok'=> true,
+                'message' => 'Filtered projects retrieved successfully',
+                'date' => $projects
+            ], 200);
+         }
 }
