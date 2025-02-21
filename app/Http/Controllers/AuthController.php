@@ -13,7 +13,7 @@ class AuthController
      */
 
      public function register(Request $request){
-        $validator = validate($request->all(), [
+        $validator = validator($request->all(), [
             'name' => 'required',
             'email' => 'required|email',
             'password' => 'required',
@@ -45,12 +45,12 @@ class AuthController
       */
 
       public function login(Request $request){
-        $validator = validate($request->all(), [
+        $validator = validator($request->all(), [
             'email' => 'required|email',
             'password' => 'required'
         ]);
 
-        if(validator->fails()){
+        if($validator->fails()){
             return response()->json([
                 'ok' => false,
                 'message' => 'Login Failed',
