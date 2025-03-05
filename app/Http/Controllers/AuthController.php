@@ -65,7 +65,7 @@ class AuthController
             return response()->json([
                 'ok' => true,
                 'message' => 'Login Success',
-                'date' => $user
+                'data' => $user
             ], 200);
         }
 

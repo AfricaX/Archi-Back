@@ -15,6 +15,8 @@ class ProjectsController
      public function create(Request $request){
         $validator = validator($request->all(), [
             'user_id' => 'required|exists:users,id',
+            'project_title' => 'required| max:20',
+            'description' => 'sometimes | max: 2000',
             'lot_size' => 'required| numeric | max:1000',
             'floors' => 'required | numeric | max:50',
             'finish_type' => 'required | max:30',
@@ -59,6 +61,8 @@ class ProjectsController
        public function update(Request $request, Projects $project){
         $validator = validator($request->all(),[
             'user_id' => 'required|exists:users,id',
+             'project_title' => 'required| max:20',
+            'description' => 'sometimes | max: 2000',
             'lot_size' => 'required| numeric | max:1000',
             'floors' => 'required | numeric | max:50',
             'finish_type' => 'required | max:30',

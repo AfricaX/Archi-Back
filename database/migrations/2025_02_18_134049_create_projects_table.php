@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('project_title');
+            $table->string('description');
             $table->integer('lot_size');
             $table->integer('floors');
             $table->string('finish_type');

@@ -12,6 +12,8 @@ class Projects extends Model
 
     protected $fillable = [
         'user_id',
+        'project_title',
+        'description',
         'lot_size',
         'floors',
         'finish_type',
