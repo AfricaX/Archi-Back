@@ -14,10 +14,10 @@ Route::middleware('auth:api')->post('/logout', [AuthController::class, 'logout']
 
 // http://localhost:8000/api/projects/
 Route::prefix('/projects')->middleware(['auth:api'])->group(function(){
-    Route::get('/',[ProjectsController::class, 'index']);
     Route::post('/', [ProjectsController::class, 'create']);
     Route::patch('/{project}', [ProjectsController::class, 'update']);
     Route::delete('/{project}', [ProjectsController::class, 'destroy']);
-    Route::get('/recents', [ProjectsController::class, 'recents']);
-    Route::get('/filter', [ProjectsController::class, 'filter']);
 });
+ Route::get('/projects',[ProjectsController::class, 'index']);
+ Route::get('/recents', [ProjectsController::class, 'recents']);
+ Route::get('/filter', [ProjectsController::class, 'filter']);
