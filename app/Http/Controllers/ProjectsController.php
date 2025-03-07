@@ -137,7 +137,7 @@ class ProjectsController
             return response()->json([
                 'ok'=> true,
                 'message' => 'Filtered projects retrieved successfully',
-                'date' => $projects
+                'data' => $projects
             ], 200);
          }
 }

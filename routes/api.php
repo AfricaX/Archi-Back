@@ -20,4 +20,4 @@ Route::prefix('/projects')->middleware(['auth:api'])->group(function(){
 });
  Route::get('/projects',[ProjectsController::class, 'index']);
  Route::get('/recents', [ProjectsController::class, 'recents']);
- Route::get('/filter', [ProjectsController::class, 'filter']);
+ Route::post('projects/filter', [ProjectsController::class, 'filter']);
